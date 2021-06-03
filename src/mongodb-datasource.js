@@ -110,6 +110,10 @@ class MongoDbDataSource {
 
   buildIdentity(config, id) {
     const identity = {};
+    if(typeof id === 'object' &&id !== null) {
+      return id;
+    }
+
     if (id || id === 0) {
       identity.id = !isNaN(id) ? id : id.toString().toUpperCase();
     }
@@ -133,6 +137,9 @@ class MongoDbDataSource {
     }
     if (identity.bundle) {
       filter["_id.bundle"] = identity.bundle;
+    }
+    if (identity.board) {
+      filter["_id.board"] = identity.board;
     }
     return filter;
   }
